@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Dto\UserDto;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use JWTAuth;
@@ -29,7 +30,7 @@ class AuthRepository
         return response()->json([
             'message' => 'User created',
             'token' => $token,
-            'user' => $user
+            'user' => new UserDto($user)
         ], Response::HTTP_OK);
     }
 
@@ -75,6 +76,6 @@ class AuthRepository
                 'message' => 'Invalid token / token expired',
             ], 401);
 
-        return response()->json(['user' => $user]);
+        return response()->json(['user' => new UserDto($user)]);
     }
 }
